@@ -14,8 +14,8 @@ sheetResolutions = {
 }
 outputDimensions = sheetResolutions['A4-Print']; #Pixel dimensions of each output sheet
 
-margins = (20, 40) #right/left, up/down in pixels
-padding = (0, 20) #right/left, up/down padding withing each barcode grid space
+margins = (25, 40) #right/left, up/down in pixels
+padding = (20, 25) #right/left, up/down padding withing each barcode grid space
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -34,10 +34,16 @@ def createSheet(buffer):
             column = 0
         
         imgFile = Image.open(filePath)
-        imgFile = imgFile.resize((barcodeDimensions[0] - 2 * padding[0], barcodeDimensions[1] - 2 * padding[1]))
+        
+        #resize barcode image to fit inside padded barcodeDimensions box
+        ratio = min((barcodeDimensions[0] - 2 * padding[0]) / imgFile.size[0], (barcodeDimensions[1] - 2 * padding[1]) / imgFile.size[1])
+        imgFile = imgFile.resize((int(ratio * imgFile.size[0]), int(ratio * imgFile.size[1])))
 
-        offset = (margins[0] + padding[0] + column * barcodeDimensions[0], margins[1] + padding[1] + row * barcodeDimensions[1])
-        sheet.paste(imgFile, offset) #place barcode onto the sheet at the correct location
+        #center barcode image in box
+        offsetX = int(margins[0] + padding[0] + column * barcodeDimensions[0] + (barcodeDimensions[0] - imgFile.size[0]) / 2)
+        offsetY = int(margins[1] + padding[1] + row * barcodeDimensions[1] + (barcodeDimensions[1] - imgFile.size[1]) / 2)
+
+        sheet.paste(imgFile, (offsetX, offsetY)) #place barcode onto the sheet at the correct location
         column += 1
 
     return sheet
@@ -59,4 +65,4 @@ if len(barcodeBuffer) > 0:
 
 
 #convert sheets to a single pdf file
-sheetBuffer[0].save("output.pdf", "PDF", resolution=100.0, save_all=True, append_images=sheetBuffer[1:])
+sheetBuffer[0].save("output.pdf", "PDF", resolution=300.0, save_all=True, append_images=sheetBuffer[1:])
