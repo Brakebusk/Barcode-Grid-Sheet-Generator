@@ -1,2 +1,3 @@
 Create grid sheets for barcodes using Python.
-Python Pillow (PIL) required.
+
+Requires Python PIL (Pillow v. 4.20+)
