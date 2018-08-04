@@ -9,6 +9,7 @@ class BarcodeHelper:
     
     def getBarcodeImage(self):
         return self.barcodeImage.render({
-            'module_width': 0.4,
+            'module_width': 0.5,
+            'font_size': 16,
             'text_distance': 1
         })
