@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw
 from BarcodeHelper import BarcodeHelper
 
 #Sheet config:
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~a
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #number of barcodes to fit in each axes:
 gridWidth = 5
 gridHeight = 13
