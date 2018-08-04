@@ -23,12 +23,16 @@ padding = (20, 25) #right/left, up/down padding withing each barcode grid space
 barcodeDimensions = (int((outputDimensions[0] - 2 * margins[0]) / gridWidth), int((outputDimensions[1] - 2 * margins[1]) / gridHeight))
 
 def createSequentialBarcodes():
+    #barcode generation config:
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     prefix = ""
     suffix = ""
     
     start = 1
     end = 299
     padNumToLength = 3 #pad so that each number has the same number of digits by adding necessary 0-es at the start
+
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     barcodes = []
 
