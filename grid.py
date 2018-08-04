@@ -1,10 +1,8 @@
 from PIL import Image, ImageDraw
 from BarcodeHelper import BarcodeHelper
 
-#config:
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-barcodePath = "./barcodes/" #folder containing image files of all the barcodes
-
+#Sheet config:
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~a
 #number of barcodes to fit in each axes:
 gridWidth = 5
 gridHeight = 13
@@ -16,14 +14,13 @@ outputDimensions = sheetResolutions['A4-Print']; #Pixel dimensions of each outpu
 
 margins = (25, 40) #right/left, up/down in pixels
 padding = (20, 25) #right/left, up/down padding withing each barcode grid space
-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #calculate pixel dimensions of barcodes on the grid:
 barcodeDimensions = (int((outputDimensions[0] - 2 * margins[0]) / gridWidth), int((outputDimensions[1] - 2 * margins[1]) / gridHeight))
 
 def createSequentialBarcodes():
-    #barcode generation config:
+    #Barcode generation config:
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     prefix = ""
     suffix = ""
