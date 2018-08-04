@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw
-import os
+from BarcodeHelper import BarcodeHelper
 
 #config:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -22,18 +22,36 @@ padding = (20, 25) #right/left, up/down padding withing each barcode grid space
 #calculate pixel dimensions of barcodes on the grid:
 barcodeDimensions = (int((outputDimensions[0] - 2 * margins[0]) / gridWidth), int((outputDimensions[1] - 2 * margins[1]) / gridHeight))
 
+def createSequentialBarcodes():
+    prefix = ""
+    suffix = ""
+    
+    start = 1
+    end = 299
+    padNumToLength = 3 #pad so that each number has the same number of digits by adding necessary 0-es at the start
+
+    barcodes = []
+
+    for num in range(start, end + 1):
+        content = str(num)
+        if len(content) < padNumToLength:
+            content = "0" * (padNumToLength - len(content)) + content
+        content = prefix + content + suffix
+    
+        barcodes.append(BarcodeHelper(content).getBarcodeImage())
+
+    return barcodes
+
 def createSheet(buffer): 
     #create and return sheet of barcodes in specified grid as PIL RGB image
     sheet = Image.new('RGB', (outputDimensions), color='white')
     
     row = 0
     column = 0
-    for filePath in buffer:
+    for imgFile in buffer:
         if column == gridWidth:
             row += 1
             column = 0
-        
-        imgFile = Image.open(filePath)
         
         #resize barcode image to fit inside padded barcodeDimensions box
         ratio = min((barcodeDimensions[0] - 2 * padding[0]) / imgFile.size[0], (barcodeDimensions[1] - 2 * padding[1]) / imgFile.size[1])
@@ -50,14 +68,13 @@ def createSheet(buffer):
 
 sheetBuffer = [] #will contain PIL images of each sheet containing barcodes
 barcodeBuffer = []
-for filename in os.listdir(barcodePath):
-    filePath = barcodePath + filename
-    barcodeBuffer.append(filePath)
+for bcImage in createSequentialBarcodes():
+    barcodeBuffer.append(bcImage)
 
     if len(barcodeBuffer) == gridWidth * gridHeight:
-        #create a sheet with all the barcodes and clear the buffer
-        sheetBuffer.append(createSheet(barcodeBuffer))
-        barcodeBuffer = []
+         #create a sheet with all the barcodes and clear the buffer
+         sheetBuffer.append(createSheet(barcodeBuffer))
+         barcodeBuffer = []
 
 if len(barcodeBuffer) > 0:
     #add remaining barcodes onto a sheet
