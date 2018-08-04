@@ -1,6 +1,6 @@
 Create grid sheets of barcodes using Python.
 
-### Requires 
+### Requires:
 * Python PIL 4.2.0+ (https://pypi.org/project/Pillow/)
 * python-barcode (https://pypi.org/project/python-barcode/)
 
