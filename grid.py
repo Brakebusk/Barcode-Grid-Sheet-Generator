@@ -23,11 +23,11 @@ def createSequentialBarcodes():
     #Barcode generation config:
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     prefix = ""
-    suffix = ""
+    suffix = "2018"
     
-    start = 1
+    start = 101
     end = 299
-    padNumToLength = 3 #pad so that each number has the same number of digits by adding necessary 0-es at the start
+    padNumToLength = 0 #pad so that each number has the same number of digits by adding necessary 0-es at the start
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -38,7 +38,7 @@ def createSequentialBarcodes():
         if len(content) < padNumToLength:
             content = "0" * (padNumToLength - len(content)) + content
         content = prefix + content + suffix
-    
+
         barcodes.append(BarcodeHelper(content).getBarcodeImage())
 
     return barcodes
